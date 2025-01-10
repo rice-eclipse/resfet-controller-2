@@ -1,0 +1,194 @@
+{
+    "frequency_status": 10,
+    "log_buffer_size": 256,
+    "sensor_groups": [
+        {
+            "label": "Thermocouples",
+            "frequency_standby": 5,
+            "frequency_ignition": 20,
+            "frequency_transmission": 5,
+            "sensors": [
+                {
+                    "label": "TC1: Oxidizer tank",
+                    "color": "#FC6453",
+                    "units": "°C",
+                    "calibration_intercept": -250,
+                    "calibration_slope": 0.2441,
+                    "adc": 0,
+                    "channel": 0
+                },
+                {
+                    "label": "TC2: Combustion chamber",
+                    "color": "#EF3B9E",
+                    "units": "°C",
+                    "calibration_intercept": -250,
+                    "calibration_slope": 0.2441,
+                    "adc": 0,
+                    "channel": 1
+                }
+            ]
+        },
+        {
+            "label": "Pressure transducers",
+            "frequency_standby": 5,
+            "frequency_ignition": 2000,
+            "frequency_transmission": 5,
+            "sensors": [
+                {
+                    "label": "PT1: Combustion chamber",
+                    "units": "psi",
+                    "color": "#EBF927",
+                    "calibration_intercept": -249.8,
+                    "calibration_slope": 0.339,
+                    "rolling_average_width": 10,
+                    "range": [-300, 700],
+                    "adc": 2,
+                    "channel": 4
+                },
+                {
+                    "label": "PT2: Oxidizer feedline",
+                    "units": "psi",
+                    "color": "#1D8718",
+                    "calibration_intercept": -249.8,
+                    "calibration_slope": 0.339,
+                    "adc": 2,
+                    "channel": 5
+                },
+                {
+                    "label": "PT3: Injector",
+                    "units": "psi",
+                    "color": "#4104D1",
+                    "calibration_intercept": -249.8,
+                    "calibration_slope": 0.339,
+                    "rolling_average_width": 10,
+                    "adc": 2,
+                    "channel": 6
+                },
+                {
+                    "label": "PT4: Oxidizer tank",
+                    "color": "#F9864D",
+                    "units": "psi",
+                    "calibration_intercept": -249.8,
+                    "calibration_slope": 0.339,
+                    "adc": 2,
+                    "channel": 7
+                }
+            ]
+        },
+        {
+            "label": "Load cells",
+            "frequency_standby": 5,
+            "frequency_ignition": 2000,
+            "frequency_transmission": 5,
+            "sensors": [
+                {
+                    "label": "Main axial cell",
+                    "color": "#3292FF",
+                    "units": "lb",
+                    "calibration_intercept": -304.38,
+                    "calibration_slope": 0.967,
+                    "adc": 0,
+                    "channel": 4
+                }
+            ]
+        }
+    ],
+    "drivers": [
+        {
+            "label": "Feedline",
+            "label_actuate": "Open",
+            "label_deactuate": "Close",
+            "pin": 35,
+            "protected": false
+        },
+        {
+            "label": "Ox tank vent",
+            "label_actuate": "Open",
+            "label_deactuate": "Close",
+            "pin": 33,
+            "protected": false
+        },
+        {
+            "label": "Ground vent",
+            "label_actuate": "Close",
+            "label_deactuate": "Open",
+            "pin": 31,
+            "protected": false
+        },
+        {
+            "label": "Ignition",
+            "label_actuate": "Ignite",
+            "label_deactuate": "Shufoff",
+            "pin": 11,
+            "protected": true
+        }
+    ],
+    "pre_ignite_time": 1000,
+    "post_ignite_time": 5000,
+    "ignition_sequence": [
+        {
+            "type": "Actuate",
+            "driver_id": 0,
+            "value": false
+        },
+        {
+            "type": "Actuate",
+            "driver_id": 1,
+            "value": false
+        },
+        {
+            "type": "Actuate",
+            "driver_id": 2,
+            "value": true
+        },
+        {
+            "type": "Actuate",
+            "driver_id": 3,
+            "value": true
+        },
+        {
+            "type": "Sleep",
+            "duration": {
+                "secs": 10,
+                "nanos": 0
+            }
+        },
+        {
+            "type": "Actuate",
+            "driver_id": 3,
+            "value": false
+        }
+    ],
+    "estop_sequence": [
+        {
+            "type": "Actuate",
+            "driver_id": 0,
+            "value": false
+        },
+        {
+            "type": "Actuate",
+            "driver_id": 1,
+            "value": false
+        },
+        {
+            "type": "Actuate",
+            "driver_id": 2,
+            "value": true
+        },
+        {
+            "type": "Actuate",
+            "driver_id": 3,
+            "value": false
+        }
+    ],
+    "spi_mosi": 19,
+    "spi_miso": 21,
+    "spi_clk": 23,
+    "spi_frequency_clk": 100000,
+    "adc_cs": [
+        22,
+        24,
+        26
+    ],
+    "pin_heartbeat": 3
+}
